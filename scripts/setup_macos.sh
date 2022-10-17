@@ -40,3 +40,12 @@ if test -f "$FILE"; then
 else
   brew install kubectl
 fi
+
+echo "install minikube"
+
+FILE=/usr/local/bin/minikube
+if test -f "$FILE"; then
+    echo "$FILE exists."
+else
+    brew install minikube
+fi
