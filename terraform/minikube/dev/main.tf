@@ -4,20 +4,9 @@ resource "kubernetes_namespace" "namespace" {
   }
 }
 
-resource "kubernetes_deployment" "mysql" {
+module "mysql" {
+  source = "../../modules/mysql/self-built"
 
-
+  namespace = var.namespace
 }
 
-resource "kubernetes_service" "mysql_service" {
-
-}
-
-
-resource "kubernetes_deployment" "mongodb" {
-  count = 0
-}
-
-resource "kubernetes_service" "mongodb_service" {
-  count = 0
-}

@@ -1,4 +1,4 @@
-variable "provider" {
+variable "platform" {
   type = string
 }
 variable "environment" {
