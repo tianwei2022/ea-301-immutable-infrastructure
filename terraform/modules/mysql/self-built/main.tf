@@ -46,7 +46,7 @@ resource "kubernetes_deployment" "mysql" {
       spec {
         container {
           name  = "mysqldb"
-          image = "ghcr.io/tw-devops-community/mysql:latest"
+          image = "ghcr.io/anddd7/mysql:latest"
 
           port {
             container_port = 3306

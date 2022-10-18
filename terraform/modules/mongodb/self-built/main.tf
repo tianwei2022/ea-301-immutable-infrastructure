@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "mongodb" {
       spec {
         container {
           name  = "mongodb"
-          image = "ghcr.io/tw-devops-community/mongodb:latest"
+          image = "ghcr.io/anddd7/mongodb:latest"
 
           port {
             container_port = 27017
