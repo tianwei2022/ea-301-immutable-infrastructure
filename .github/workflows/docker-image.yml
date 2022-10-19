@@ -56,7 +56,7 @@ jobs:
             ${{ matrix.service }} \
             ${{ matrix.platform }} \
             ${{ matrix.env }} \
-            ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/${{ matrix.service }}:${{ steps.meta.outputs.tags[0] }}
+            ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/${{ matrix.service }}:${{ steps.meta.outputs.tags }}
       - run: |
           git add .
           git commit -m "Set `app` image tag to `${GITHUB_SHA}`"
