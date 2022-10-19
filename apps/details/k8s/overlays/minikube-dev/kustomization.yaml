@@ -1,0 +1,7 @@
+namespace: minikube-dev
+
+bases:
+  - ../../base
+
+resources:
+  - configmap.yaml
