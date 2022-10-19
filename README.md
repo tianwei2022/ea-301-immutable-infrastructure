@@ -21,13 +21,40 @@ Tech Stack
 
 此处使用 Minikube 搭建的本地集群来模拟线上集群，部分服务采用集群内搭建（如 Mongodb、Mysql、Jenkins）
 
-### 开发环境
+### 0. 准备仓库
 
-- Fork 当前代码仓库
+- Github Fork 当前代码仓库
+- 配置 Github Token, `export CR_PAT="ghp_xxxxxxxxx"`
+  - <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry>
+  - <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token>
+
+### 1. 开发环境
+
 - `./scripts/setup_macos` 安装必要工具和软件
-- `minikube start` 启动集群
+- 修改 `config.properties` 内容
 
-### 应用运行环境
+### 2. 基础设施
+
+#### 启动集群
+
+通过 terraform 启动集群
+
+layer0
+
+#### CI (已搭建好)
+
+Github Actions
+
+- image registry: Github Packages
+- manifest repo: Github Repository
+
+#### CD
+
+通过 terraform 管理集群内软件
+
+layer1
+
+### 3. 应用服务
 
 #### 使用 terraform 管理依赖服务
 
@@ -35,22 +62,14 @@ Tech Stack
 - 部署 mysql (用 terraform 控制 k8s 文件)
   - 将连接信息暴露成 secrets
 
-#### 使用 kustomize 生成 manifest
+#### 使用 kustomize 管理配置信息
 
 - 创建 manifest 文件
 
-### 基础设施
+### 4. 部署应用
 
-#### CI
+- 进入 argocd，sync
 
-- Github Actions + Github Packages
-  - 注册 token ...
-- 通过 skaffold 控制编译范围
-
-#### CD
-
-- ArgoCD
-  - terraform + helm 安装
 
 ## 新的需求
 

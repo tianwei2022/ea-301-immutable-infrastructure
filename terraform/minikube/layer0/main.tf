@@ -1,5 +1,5 @@
 
-resource "shell_script" "github_repository" {
+resource "shell_script" "cluster" {
   lifecycle_commands {
     create = "minikube start"
     read   = "minikube staus"
