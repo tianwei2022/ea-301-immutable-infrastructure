@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${SERVICE_NAME}
+  labels:
+    app: ${SERVICE_NAME}
+    version: ${VERSION}
+spec:
+  selector:
+    matchLabels:
+      app: ${SERVICE_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${SERVICE_NAME}
+        version: ${VERSION}
+    spec:
+      containers:
+        - name: ${SERVICE_NAME}
+          # image: ${IMAGE}
+          image: ghcr.io/anddd7/reviews:091fb86 # it's big image, use existing one
+          envFrom:
+            - configMapRef:
+                name: ${SERVICE_NAME}
+                optional: true
+            - configMapRef:
+                name: ${SERVICE_NAME}-terraform
+                optional: true
+            - secretRef:
+                name: ${SERVICE_NAME}
+                optional: true
+            - secretRef:
+                name: ${SERVICE_NAME}-terraform
+                optional: true
+          ports:
+            - containerPort: 9080
+          serviceAccountName: sa-${SERVICE_NAME}
+          securityContext:
+            runAsUser: 1000
