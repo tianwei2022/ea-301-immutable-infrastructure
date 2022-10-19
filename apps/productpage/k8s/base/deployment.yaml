@@ -33,6 +33,12 @@ spec:
                 optional: true
           ports:
             - containerPort: 9080
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
           serviceAccountName: sa-${SERVICE_NAME}
           securityContext:
             runAsUser: 1000
+      volumes:
+        - name: tmp
+          emptyDir: {}

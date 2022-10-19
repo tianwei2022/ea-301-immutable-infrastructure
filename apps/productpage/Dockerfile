@@ -28,8 +28,10 @@ COPY templates /opt/microservices/templates
 COPY static /opt/microservices/static
 COPY requirements.txt /opt/microservices/
 
-ARG flood_factor
-ENV FLOOD_FACTOR ${flood_factor:-0}
+
+## inject by k8s configmap/secrt
+# ARG flood_factor
+# ENV FLOOD_FACTOR ${flood_factor:-0}
 
 EXPOSE 9080
 WORKDIR /opt/microservices
