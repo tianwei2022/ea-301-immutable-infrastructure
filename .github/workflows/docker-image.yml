@@ -56,7 +56,6 @@ jobs:
             ${{ matrix.service }} \
             ${{ matrix.platform }} \
             ${{ matrix.env }} \
-            ${{ steps.docker_push.outputs.imageid }} \
             ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/${{ matrix.service }}:${{ steps.meta.outputs.tags[0] }}
       - run: |
           git add .
