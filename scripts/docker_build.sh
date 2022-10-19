@@ -8,10 +8,12 @@ read -p "please enter the service name: " SERVICE_NAME
 read -p "please enter the service description: " SERVICE_DESC
 
 source $VAR_CONFIG_FILE
-IMAGE_NAME="ghcr.io/$OWNER_NAME/$SERVICE_NAME:$VAR_GIT_REVISION"
+IMAGE_NAME="ghcr.io/$OWNER_NAME/$SERVICE_NAME-locally:$VAR_GIT_REVISION"
 
 echo "start to build your image: $IMAGE_NAME"
 echo "..."
+
+echo $CR_PAT | docker login ghcr.io -u $OWNER_NAME --password-stdin
 
 docker build \
     --label "org.opencontainers.image.source=$REPO_URL" \

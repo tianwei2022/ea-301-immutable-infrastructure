@@ -10,7 +10,7 @@ Tech Stack
 
 - Kubernetes
 - Terraform
-- Github Actions + Github Packages
+- Github Actions
 - ArgoCD
 - Kustomize
 - Java/Node/Ruby/Python ...
@@ -23,7 +23,7 @@ Tech Stack
 
 ### 开发环境
 
-- Fork 当前代码仓库 `ea-301-<your-repo-name>`
+- Fork 当前代码仓库
 - `./scripts/setup_macos` 安装必要工具和软件
 - `minikube start` 启动集群
 
