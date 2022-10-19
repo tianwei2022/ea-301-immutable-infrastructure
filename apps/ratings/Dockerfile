@@ -19,8 +19,9 @@ RUN apt-get update \
     && apt-get install curl --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 
-ARG service_version
-ENV SERVICE_VERSION ${service_version:-v1}
+## inject by k8s configmap/secrt
+# ARG service_version
+# ENV SERVICE_VERSION ${service_version:-v1}
 
 COPY package.json /opt/microservices/
 COPY ratings.js /opt/microservices/
