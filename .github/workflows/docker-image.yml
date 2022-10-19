@@ -20,17 +20,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        service: [details, productpage, ratings, reviews]
+        platform: [minikube]
+        env: [dev]
         include:
-          - service_name: details
-          - service_name: productpage
-          - service_name: ratings
-#           - service_name: reviews # image too big
+          - service: reviews
+            skip_image: true
             
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v3
     - name: Log in to the Container registry
-      uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+      uses: docker/login-action@v2.1.0
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
@@ -38,13 +39,22 @@ jobs:
         
     - name: Extract metadata (tags, labels) for details
       id: meta
-      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+      uses: docker/metadata-action@v4.1.1
       with:
-        images: ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/${{ matrix.service_name }}
-    - name: Build and push Docker image
-      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        images: ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/${{ matrix.service }}
+    - if: ${{ !martix.skip_image }}
+      name: Build and push Docker image
+      uses: docker/build-push-action@v3.2.0
       with:
-        context: ./apps/${{ matrix.service_name }}
+        context: ./apps/${{ matrix.service }}
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+        
+    - name: Setup kustomize
+      uses: imranismail/setup-kustomize@v2
+    - run: ./script/kustomize_build_ci.sh ${{ matrix.service }}
+    - run: |
+          git add .
+          git commit -m "Set `app` image tag to `${GITHUB_SHA}`"
+          git push
