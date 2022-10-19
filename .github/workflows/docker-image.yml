@@ -26,7 +26,6 @@ jobs:
         include:
           - service: reviews
             skip_image: true
-            
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v3
@@ -44,6 +43,7 @@ jobs:
         images: ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/${{ matrix.service }}
     - if: ${{ !matrix.skip_image }}
       name: Build and push Docker image
+      id: docker_push
       uses: docker/build-push-action@v3.2.0
       with:
         context: ./apps/${{ matrix.service }}
@@ -53,7 +53,7 @@ jobs:
         
     - name: Setup kustomize
       uses: imranismail/setup-kustomize@v2
-    - run: ./script/kustomize_build_ci.sh ${{ matrix.service }} ${{ matrix.platform }} ${{ matrix.env }}
+    - run: ./script/kustomize_build_ci.sh ${{ matrix.service }} ${{ matrix.platform }} ${{ matrix.env }} ${{ steps.docker_push.outputs.imageid }}
     - run: |
           git add .
           git commit -m "Set `app` image tag to `${GITHUB_SHA}`"
