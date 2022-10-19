@@ -68,7 +68,8 @@ jobs:
             ${{ matrix.platform }} \
             ${{ matrix.env }} \
             ${{ steps.meta.outputs.tags }}
-      - run: |
-          git add .
-          git commit -m "Set `app` image tag to `${GITHUB_SHA}`"
-          git push
+      - name: Auto push the manifest
+        uses: EndBug/add-and-commit@v9
+        with:
+          committer_name: github-actions
+          message: "auto generated manifest"
