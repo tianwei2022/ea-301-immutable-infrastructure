@@ -14,10 +14,18 @@ env:
   
 jobs:
 
-  build:
+  build-and-push-image:
 
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service_name: details
+          - service_name: productpage
+          - service_name: ratings
+#           - service_name: reviews # image too big
+            
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v3
@@ -27,15 +35,16 @@ jobs:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Extract metadata (tags, labels) for details
       id: meta
       uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
       with:
-        images: ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/details
+        images: ${{ env.REGISTRY }}/${{ env.OWNER_NAME }}/${{ matrix.service_name }}
     - name: Build and push Docker image
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
-        context: ./apps/details
+        context: ./apps/${{ matrix.service_name }}
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
