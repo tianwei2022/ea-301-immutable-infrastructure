@@ -25,6 +25,9 @@ jobs:
           - service: reviews
             skip_image: true
     steps:
+      ###
+      # prepare
+      ###
       - name: Checkout the repository
         uses: actions/checkout@v3
 
@@ -35,6 +38,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      ###
+      # docker image
+      ###
       - name: Extract metadata (tags, labels) for details
         id: meta
         uses: docker/metadata-action@v4.1.1
@@ -51,10 +57,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      ###
+      # kustomize
+      ###
       - name: Setup kustomize
         uses: imranismail/setup-kustomize@v2
       - run: |
-          ./script/kustomize_build_ci.sh \
+          ./scripts/kustomize_build_ci.sh \
             ${{ matrix.service }} \
             ${{ matrix.platform }} \
             ${{ matrix.env }} \
