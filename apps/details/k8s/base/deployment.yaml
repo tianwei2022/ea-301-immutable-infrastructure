@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ${SERVICE_NAME}
-          image: ${IMAGE}
+          image: ${IMAGE_NAME}
           envFrom:
             - configMapRef:
                 name: ${SERVICE_NAME}

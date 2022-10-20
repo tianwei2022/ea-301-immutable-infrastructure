@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ${SERVICE_NAME}
-          # image: ${IMAGE}
+          # image: ${IMAGE_NAME}
           image: ghcr.io/anddd7/reviews:091fb86 # it's big image, use existing one
           envFrom:
             - configMapRef:
