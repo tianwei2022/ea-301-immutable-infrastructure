@@ -89,14 +89,14 @@ jobs:
             ${{ needs.build-and-push-image.outputs.reviews }}
           )
             
-          for i in "${!service[@]}"; do
-            s=${service[i]}
-            image=${images[i]}
+          for ((idx=0; idx<${#service[@]}; ++idx)); do
+            s=${service[idx]}
+            i=${images[idx]}
           
             for p in "${platform[@]}"; do
               for e in "${env[@]}"; do
-                echo "$s" "$p" "$e" "$image"
-                ./scripts/kustomize_build_ci.sh "$s" "$p" "$e" "$image"
+                echo "$s" "$p" "$e" "$i"
+                ./scripts/kustomize_build_ci.sh "$s" "$p" "$e" "$i"
               done
             done
           done
