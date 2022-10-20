@@ -95,7 +95,8 @@ jobs:
           
             for p in "${platform[@]}"; do
               for e in "${env[@]}"; do
-              ./scripts/kustomize_build_ci.sh "$s" "$p" "$e" "$image"
+                echo "$s" "$p" "$e" "$image"
+                ./scripts/kustomize_build_ci.sh "$s" "$p" "$e" "$image"
               done
             done
           done
