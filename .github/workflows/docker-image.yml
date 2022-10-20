@@ -40,6 +40,8 @@ jobs:
         uses: docker/metadata-action@v4.1.1
         with:
           images: ghcr.io/${{ github.actor }}/${{ matrix.service }}
+          tags: |
+            type=sha
       - if: ${{ !matrix.skip_image }}
         name: Build and push Docker image
         id: docker_push
