@@ -62,7 +62,7 @@ spec:
         - secretRef:
             name: productpage-terraform
             optional: true
-        image: 
+        image: ghcr.io/anddd7/productpage:sha-33d20f4
         name: productpage
         ports:
         - containerPort: 9080
