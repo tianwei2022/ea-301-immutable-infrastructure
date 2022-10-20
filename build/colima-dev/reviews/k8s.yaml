@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    account: reviews
+  name: sa-reviews
+  namespace: minikube-dev
+---
+apiVersion: v1
+data:
+  ENABLE_RATINGS: false
+  SERVICE_VERSION: v1
+  STAR_COLOR: black
+kind: ConfigMap
+metadata:
+  name: reviews
+  namespace: minikube-dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: reviews
+    service: reviews
+  name: reviews
+  namespace: minikube-dev
+spec:
+  ports:
+  - name: http
+    port: 9080
+    targetPort: 9080
+  selector:
+    app: reviews
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: reviews
+    version: 
+  name: reviews
+  namespace: minikube-dev
+spec:
+  selector:
+    matchLabels:
+      app: reviews
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: 
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: reviews
+            optional: true
+        - configMapRef:
+            name: reviews-terraform
+            optional: true
+        - secretRef:
+            name: reviews
+            optional: true
+        - secretRef:
+            name: reviews-terraform
+            optional: true
+        image: ghcr.io/anddd7/reviews:091fb86
+        name: reviews
+        ports:
+        - containerPort: 9080
+        securityContext:
+          runAsUser: 1000
+        serviceAccountName: sa-reviews

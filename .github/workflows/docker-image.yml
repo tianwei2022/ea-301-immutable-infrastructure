@@ -2,13 +2,11 @@ name: Github Actions CI
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-# env:
 
 jobs:
   build-and-push-image:
@@ -16,9 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        service: [details, productpage, ratings, reviews]
-        platform: [minikube]
-        env: [dev]
+        service: [ details, productpage, ratings, reviews ]
         include:
           - service: reviews
             skip_image: true
@@ -44,7 +40,6 @@ jobs:
         uses: docker/metadata-action@v4.1.1
         with:
           images: ghcr.io/${{ github.actor }}/${{ matrix.service }}
-
       - if: ${{ !matrix.skip_image }}
         name: Build and push Docker image
         id: docker_push
@@ -54,6 +49,24 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Output docker tags
+        id: docker_tag
+        run: echo "${{ matrix.service }}=${{ steps.meta.outputs.tags }}" >> $GITHUB_OUTPUT
+    outputs:
+      details: ${{ steps.docker_tag.outputs.details }}
+      productpage: ${{ steps.docker_tag.outputs.productpage }}
+      ratings: ${{ steps.docker_tag.outputs.ratings }}
+      reviews: ${{ steps.docker_tag.outputs.reviews }}
+
+  generate-manifest:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    steps:
+      ###
+      # prepare
+      ###
+      - name: Checkout the repository
+        uses: actions/checkout@v3
 
       ###
       # kustomize
@@ -61,11 +74,33 @@ jobs:
       - name: Setup kustomize
         uses: imranismail/setup-kustomize@v2
       - run: |
-          ./scripts/kustomize_build_ci.sh \
-            ${{ matrix.service }} \
-            ${{ matrix.platform }} \
-            ${{ matrix.env }} \
-            ${{ steps.meta.outputs.tags }}
+          service=(
+            'details'
+            'productpage'
+            'ratings'
+            'reviews'
+          )
+          images=(
+            ${{ needs.build-and-push-image.outputs.details }}
+            ${{ needs.build-and-push-image.outputs.productpage }}
+            ${{ needs.build-and-push-image.outputs.ratings }}
+            ${{ needs.build-and-push-image.outputs.reviews }}
+          )
+            
+          for i in "${!service[@]}"; do
+            s=${service[i]}
+            image=${images[i]}
+          
+            for p in "${platform[@]}"; do
+              for e in "${env[@]}"; do
+              ./scripts/kustomize_build_ci.sh "$s" "$p" "$e" "$image"
+              done
+            done
+          done
+
+      ###
+      # git commit
+      ###
       - name: Auto push the manifest
         uses: EndBug/add-and-commit@v9
         with:
