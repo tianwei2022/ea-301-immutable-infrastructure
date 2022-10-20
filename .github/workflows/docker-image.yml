@@ -83,10 +83,10 @@ jobs:
             'reviews'
           )
           images=(
-            ${{ needs.build-and-push-image.outputs.details }}
-            ${{ needs.build-and-push-image.outputs.productpage }}
-            ${{ needs.build-and-push-image.outputs.ratings }}
-            ${{ needs.build-and-push-image.outputs.reviews }}
+            '${{ needs.build-and-push-image.outputs.details }}'
+            '${{ needs.build-and-push-image.outputs.productpage }}'
+            '${{ needs.build-and-push-image.outputs.ratings }}'
+            '${{ needs.build-and-push-image.outputs.reviews }}'
           )
             
           for ((idx=0; idx<${#service[@]}; ++idx)); do
