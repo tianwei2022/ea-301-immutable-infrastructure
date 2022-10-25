@@ -63,7 +63,7 @@ spec:
         - secretRef:
             name: details-terraform
             optional: true
-        image: ghcr.io/anddd7/details:sha-33d20f4
+        image: ghcr.io/anddd7/details:sha-b8c6df9
         name: details
         ports:
         - containerPort: 9080

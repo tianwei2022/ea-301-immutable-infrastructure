@@ -62,7 +62,7 @@ spec:
         - secretRef:
             name: ratings-terraform
             optional: true
-        image: ghcr.io/anddd7/ratings:sha-33d20f4
+        image: ghcr.io/anddd7/ratings:sha-b8c6df9
         name: ratings
         ports:
         - containerPort: 9080
