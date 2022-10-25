@@ -1,5 +1,5 @@
 module "self_built" {
-  count = var.platform == "colima" || var.platform == "minikube" ? 1 : 0
+  count = local.is_selfbuilt ? 1 : 0
 
   source = "./self-built"
 

@@ -37,11 +37,19 @@ Tech Stack
 
 #### 启动集群
 
-通过 terraform 启动集群
+通过 terraform 启动集群 和 安装必要软件
 
-layer0
+layer0，layer1 
 
-#### CI (已搭建好)
+### 3. 应用服务
+
+#### 使用 kustomize 管理配置信息
+
+- 创建 manifest 文件
+
+### 4. CI/CD
+
+#### CI
 
 Github Actions
 
@@ -50,26 +58,17 @@ Github Actions
 
 #### CD
 
-通过 terraform 管理集群内软件
-
-layer1
-
-### 3. 应用服务
-
-#### 使用 terraform 管理依赖服务
+##### terraform
 
 - 创建 namespace
 - 部署 mysql (用 terraform 控制 k8s 文件)
   - 将连接信息暴露成 secrets
 
-#### 使用 kustomize 管理配置信息
+##### argocd
 
-- 创建 manifest 文件
-
-### 4. 部署应用
+通过 argocd 管理应用服务
 
 - 进入 argocd，sync
-
 
 ## 新的需求
 
