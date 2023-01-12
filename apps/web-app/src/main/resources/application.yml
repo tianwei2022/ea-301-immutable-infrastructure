@@ -1,0 +1,25 @@
+client:
+  book-service:
+    url: ${BOOK_SERVICE_URL}
+  order-service:
+    url: ${ORDER_SERVICE_URL}
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+swagger-ui:
+  title: 图书订单 WEB Application
+  server:
+    url: ${API_SERVER_URL:#{null}}
+springdoc:
+  api-docs:
+    path: ${SPRING_DOC_API_DOC:/api-doc}
+    enabled: ${SPRING_DOC_ENABLE:false}
+  swagger-ui:
+    path: ${SPRING_DOC_SWAGGER_UI:/swagger-ui.html}

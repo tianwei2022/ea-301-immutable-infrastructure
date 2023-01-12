@@ -1,0 +1,18 @@
+apply plugin: 'pmd'
+
+pmd {
+    consoleOutput = true
+    toolVersion = "6.53.0"
+    rulesMinimumPriority = 3
+    ruleSets = []
+}
+
+pmdMain {
+    ruleSetFiles = files("gradle/pmd/pmd-main-ruleset.xml")
+    shouldRunAfter spotlessCheck
+}
+
+pmdTest {
+    ruleSetFiles = files("gradle/pmd/pmd-test-ruleset.xml")
+    shouldRunAfter pmdMain
+}

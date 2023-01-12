@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'com.diffplug.spotless' version '6.12.1'}
+
+group 'org.example.looam'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.example.looam:common-lib:1.0-SNAPSHOT'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.0'
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    // https://github.com/projectlombok/lombok/issues/1538
+    // mapstruct annotation processor need to put after lombok processor
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
+
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+    testImplementation 'org.assertj:assertj-core:3.23.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.tngtech.archunit:archunit-junit5:1.0.1'
+
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.8.1'
+    testImplementation 'org.mockito:mockito-core:4.8.1'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+apply from: "${projectDir}/gradle/pmd/pmd.gradle"
+
+test {
+    useJUnitPlatform()
+    group = 'verification'
+    dependsOn 'cleanTest'
+    shouldRunAfter pmdTest
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+apply from: "${projectDir}/gradle/jacoco.gradle"
+
+bootRun {
+    jvmArgs = ["-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005"]
+}
+
+check {
+    dependsOn 'test'
+}
+
+spotless {
+    java {
+        googleJavaFormat("1.15.0")
+        importOrder('java|javax', '', 'org.example.looam', '\\#',  '\\#org.example.looam')
+        removeUnusedImports()
+        formatAnnotations()
+        endWithNewline()
+        trimTrailingWhitespace()
+    }
+}

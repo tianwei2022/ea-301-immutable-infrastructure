@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    url: jdbc:mariadb://localhost:60000/api-test-db?permitMysqlScheme&useUnicode=true&characterEncoding=utf8
+

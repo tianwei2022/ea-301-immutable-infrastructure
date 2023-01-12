@@ -1,0 +1,100 @@
+apply plugin: "jacoco"
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+ext {
+    jacocoLineMin = 0.85
+    jacocoBranchMin = 0.60
+    jacocoExcludes = [
+            "**/archunit",
+            "**/BootstrapApplication*",
+            "**/exception/**",
+            "**/Q*PO.class",
+            "**/*Mapper.class",
+            "**/*MapperImpl.class"
+    ]
+}
+
+jacocoTestReport {
+    group = 'verification'
+    reports {
+        xml.required = false
+        csv.required = false
+    }
+
+    shouldRunAfter test
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+task jacocoApiTestReport(type: JacocoReport) {
+    group = 'verification'
+    reports {
+        xml.required = false
+        csv.required = false
+    }
+    shouldRunAfter apiTest
+    executionData apiTest
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+task jacocoAllTestReport(type: JacocoReport) {
+    group = 'verification'
+    sourceSets sourceSets.main
+    executionData test, apiTest
+    reports {
+        xml.enabled true
+    }
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+}
+
+task jacocoAllTestCoverageVerification(type: JacocoCoverageVerification) {
+    group = 'verification'
+    executionData test, apiTest
+    sourceDirectories.from = files(sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(sourceSets.main.output)
+
+    afterEvaluate {
+        classDirectories.from = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        })
+    }
+
+
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'INSTRUCTION'
+                minimum = jacocoLineMin
+            }
+        }
+
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'BRANCH'
+                minimum = jacocoBranchMin
+            }
+        }
+    }
+}
+
+jacocoAllTestCoverageVerification.dependsOn jacocoAllTestReport
+jacocoAllTestReport.dependsOn test
+jacocoAllTestReport.dependsOn apiTest
+check.dependsOn jacocoAllTestReport
+check.dependsOn jacocoAllTestCoverageVerification

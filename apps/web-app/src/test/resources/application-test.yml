@@ -1,0 +1,5 @@
+client:
+  book-service:
+    url: "place-holder"
+  order-service:
+    url: "place-holder"
