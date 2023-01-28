@@ -78,11 +78,11 @@
 
 本着小步快跑的方式，我们采用任务分解的方式逐步完成上述的需求。
 
-- [ ] 搭建本地K8S集群
-- [ ] 编写K8S配置文件，部署应用程序到集群
-- [ ] 使用 Terraform 管理应用程序所需的两套基础设施
-- [ ] 部署应用程序到两套环境
-- [ ] 创建 Ingress 控制器，配置出口路由
+- [ ] 搭建本地K8S集群, [step-1](./docs/step-1.md)
+- [ ] 编写K8S配置文件，部署应用程序到集群, [step-2](./docs/step-2.md)
+- [ ] 使用 Terraform 管理应用程序所需的两套基础设施, [step-3](./docs/step-3.md)
+- [ ] 部署应用程序到两套环境, [step-4](./docs/step-4.md)
+- [ ] 创建 Ingress 控制器，配置出口路由, [step-5](./docs/step-5.md)
 - [ ] GitOps 持续部署
-  - [ ] 使用 Git 管理 K8S配置文件和 Image 版本
-  - [ ] 部署 ArgoCD，实现自动化部署
+  - [ ] 使用 Git 管理 K8S配置文件和 Image 版本, [step-6-1](./docs/step-6-1.md)
+  - [ ] 部署 ArgoCD，实现自动化部署, [step-6-2](./docs/step-6-2.md)
