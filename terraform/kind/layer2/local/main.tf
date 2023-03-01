@@ -6,14 +6,18 @@ locals {
 
 variable "db_password" {}
 
-resource "kubernetes_namespace" "namespace" {
+
+# 使用 provider - kubernetes_namespace 创建名为 local.namespece 的命名空间
+# Task 3.1
+resource "kubernetes_namespace" "ns" {
   metadata {
     name = local.namespace
   }
 }
 
+
 module "mysqldb" {
-  depends_on = [kubernetes_namespace.namespace]
+  depends_on = [kubernetes_namespace.ns]  # Task 3.2
 
   source = "../../../module/mysql"
 
@@ -39,6 +43,23 @@ module "book-service" {
 
   db_host     = module.mysqldb.mysql_db_host
   db_password = module.mysqldb.mysql_db_password
-  db_port     = module.mysqldb.mysql_db_port
-  db_user     = module.mysqldb.mysql_db_user
+  db_port = module.mysqldb.mysql_db_port
+  db_user = module.mysqldb.mysql_db_user
 }
+
+# module "order-service" {
+#   depends_on = [module.mysqldb]
+
+#   source = "../../../../apps/order-service/terraform/kind-local"
+#   namespace = local.namespace
+  
+#   db_host = module.mysqldb.mysql_db_host
+#   db_password = module.mysqldb.mysql_db_password
+#   db_port = module.mysqldb.mysql_db_port
+#   db_user = module.mysqldb.mysql_db_user
+# }
+
+# module "web-app" {
+#   source = "../../../../apps/web-app/terraform/kind-local"
+#   namespace = local.namespace
+# }
