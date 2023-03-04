@@ -47,19 +47,19 @@ module "book-service" {
   db_user = module.mysqldb.mysql_db_user
 }
 
-# module "order-service" {
-#   depends_on = [module.mysqldb]
+module "order-service" {
+  depends_on = [module.mysqldb]
 
-#   source = "../../../../apps/order-service/terraform/kind-local"
-#   namespace = local.namespace
+  source = "../../../../apps/order-service/terraform/kind-local"
+  namespace = local.namespace
   
-#   db_host = module.mysqldb.mysql_db_host
-#   db_password = module.mysqldb.mysql_db_password
-#   db_port = module.mysqldb.mysql_db_port
-#   db_user = module.mysqldb.mysql_db_user
-# }
+  db_host = module.mysqldb.mysql_db_host
+  db_password = module.mysqldb.mysql_db_password
+  db_port = module.mysqldb.mysql_db_port
+  db_user = module.mysqldb.mysql_db_user
+}
 
-# module "web-app" {
-#   source = "../../../../apps/web-app/terraform/kind-local"
-#   namespace = local.namespace
-# }
+module "web-app" {
+  source = "../../../../apps/web-app/terraform/kind-local"
+  namespace = local.namespace
+}

@@ -9,8 +9,8 @@ resource "kubernetes_config_map" "web-app" {
     namespace = var.namespace
   }
   data = {
-    BOOK_SERVICE = "book_service"
-    ORDER_SERVICE = "order_service"
+    BOOK_SERVICE_URL = "book-service"
+    ORDER_SERVICE_URL = "order-service"
   }
 }
 
