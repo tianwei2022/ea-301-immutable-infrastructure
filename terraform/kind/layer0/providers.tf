@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     kind = {
-      source = "kyma-incubator/kind"
-      version = "0.0.11"
+      source = "justenwalker/kind"
+      version = "0.17.0"
     }
   }
 }
@@ -10,4 +10,3 @@ terraform {
 provider "kind" {
   # Configuration options
 }
-
