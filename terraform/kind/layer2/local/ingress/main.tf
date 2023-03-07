@@ -1,6 +1,6 @@
 locals {
   apps        = {
-    book_service = "book-service"
+    book_service = "web-app"
   }
   paths = {
     book_service = "/${var.environment}/api/${local.apps.book_service}"

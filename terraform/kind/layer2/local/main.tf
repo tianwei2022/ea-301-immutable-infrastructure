@@ -27,7 +27,7 @@ module "mysqldb" {
 }
 
 module "nginx-ingress" {
-  depends_on = [kubernetes_namespace.namespace]
+  depends_on = [kubernetes_namespace.ns]
 
   source = "./ingress"
 
