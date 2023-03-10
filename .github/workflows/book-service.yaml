@@ -43,8 +43,8 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          # password: ${{ secrets.GITHUB_TOKEN }}
-          password: xxx
+          password: ${{ secrets.GITHUB_TOKEN }}
+          # password: xxx
 
       - name: Extract metadata (tags, labels) for details
         id: meta
