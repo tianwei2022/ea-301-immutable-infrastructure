@@ -1,3 +1,8 @@
+provider "kubernetes" {
+  config_path            = "~/.kube/config"
+  config_context_cluster = "kind-kind"
+}
+
 data "template_file" "docker_config_script" {
   template = "${file("${path.module}/dockerconfig.json")}"
   vars     = {
