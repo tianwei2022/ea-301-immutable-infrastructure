@@ -1,0 +1,54 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.0)
+
+2023-02-26T11:07:37.863Z  INFO 8 --- [           main] o.e.looam.web.BootstrapApplication       : Starting BootstrapApplication using Java 17.0.6 with PID 8 (/app/application.jar started by root in /app)
+2023-02-26T11:07:37.872Z  INFO 8 --- [           main] o.e.looam.web.BootstrapApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-02-26T11:07:40.287Z  INFO 8 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=692491ec-f852-3bb1-8f1a-9084a7051fc1
+2023-02-26T11:07:40.296Z  WARN 8 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'org.example.looam.web.client.order.OrderServiceClient' defined in null: Could not resolve placeholder 'ORDER_SERVICE_URL' in value "http://${ORDER_SERVICE_URL}"
+2023-02-26T11:07:40.344Z  INFO 8 --- [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-02-26T11:07:40.398Z ERROR 8 --- [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'org.example.looam.web.client.order.OrderServiceClient' defined in null: Could not resolve placeholder 'ORDER_SERVICE_URL' in value "http://${ORDER_SERVICE_URL}"
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:230) ~[spring-beans-6.0.2.jar!/:6.0.2]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.processProperties(PropertySourcesPlaceholderConfigurer.java:198) ~[spring-context-6.0.2.jar!/:6.0.2]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.postProcessBeanFactory(PropertySourcesPlaceholderConfigurer.java:173) ~[spring-context-6.0.2.jar!/:6.0.2]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:358) ~[spring-context-6.0.2.jar!/:6.0.2]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:186) ~[spring-context-6.0.2.jar!/:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:745) ~[spring-context-6.0.2.jar!/:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:565) ~[spring-context-6.0.2.jar!/:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar!/:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar!/:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar!/:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar!/:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar!/:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar!/:3.0.0]
+	at org.example.looam.web.BootstrapApplication.main(BootstrapApplication.java:11) ~[classes!/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[application.jar:na]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:95) ~[application.jar:na]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[application.jar:na]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65) ~[application.jar:na]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'ORDER_SERVICE_URL' in value "http://${ORDER_SERVICE_URL}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.0.2.jar!/:6.0.2]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.0.2.jar!/:6.0.2]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.0.2.jar!/:6.0.2]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.0.2.jar!/:6.0.2]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:191) ~[spring-context-6.0.2.jar!/:6.0.2]
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveStringValue(BeanDefinitionVisitor.java:293) ~[spring-beans-6.0.2.jar!/:6.0.2]
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveValue(BeanDefinitionVisitor.java:219) ~[spring-beans-6.0.2.jar!/:6.0.2]
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitPropertyValues(BeanDefinitionVisitor.java:147) ~[spring-beans-6.0.2.jar!/:6.0.2]
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitBeanDefinition(BeanDefinitionVisitor.java:85) ~[spring-beans-6.0.2.jar!/:6.0.2]
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:227) ~[spring-beans-6.0.2.jar!/:6.0.2]
+	... 21 common frames omitted
+
