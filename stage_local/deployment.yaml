@@ -1,38 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: book-service
-    version: latest
-  name: book-service
-  namespace: kind-local
+  name: myapp
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: book-service
+      app: myapp
+  replicas: 2
   template:
     metadata:
       labels:
-        app: book-service
-        version: latest
+        app: myapp
     spec:
       containers:
-      - envFrom:
-        - configMapRef:
-            name: book-service
-            optional: true
-        - configMapRef:
-            name: book-service-terraform
-            optional: true
-        - secretRef:
-            name: book-service
-            optional: true
-        - secretRef:
-            name: book-service-terraform
-            optional: true
-        image: book-service:latest
-        imagePullPolicy: Never
-        name: book-service
+      - name: myapp
+        image: nanajanashia/argocd-app:1.2
         ports:
         - containerPort: 8080
+

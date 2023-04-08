@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: book-service
+    version: latest
+  name: book-service
+  namespace: kind-local
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-service
+  template:
+    metadata:
+      labels:
+        app: book-service
+        version: latest
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: book-service
+            optional: true
+        - configMapRef:
+            name: book-service-terraform
+            optional: true
+        - secretRef:
+            name: book-service
+            optional: true
+        - secretRef:
+            name: book-service-terraform
+            optional: true
+        image: book-service:latest
+        imagePullPolicy: Never
+        name: book-service
+        ports:
+        - containerPort: 8080
