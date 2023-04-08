@@ -1,6 +1,6 @@
 apiVersion: v1
 data:
-  SERVICE_VERSION: sha-c687d9e
+  SERVICE_VERSION: sha-462c8a9
   spring.profiles.active: stable
 kind: ConfigMap
 metadata:
@@ -29,7 +29,7 @@ kind: Deployment
 metadata:
   labels:
     app: book-service
-    version: sha-c687d9e
+    version: sha-462c8a9
   name: book-service
   namespace: kind-stable
 spec:
@@ -41,7 +41,7 @@ spec:
     metadata:
       labels:
         app: book-service
-        version: sha-c687d9e
+        version: sha-462c8a9
     spec:
       containers:
       - envFrom:
@@ -57,7 +57,7 @@ spec:
         - secretRef:
             name: book-service-terraform
             optional: true
-        image: ghcr.io/tianwei2022/book-service:sha-c687d9e
+        image: ghcr.io/tianwei2022/book-service:sha-462c8a9
         imagePullPolicy: IfNotPresent
         name: book-service
         ports:
